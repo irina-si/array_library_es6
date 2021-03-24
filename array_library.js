@@ -63,17 +63,7 @@ const foreach = (arr, callback) => {
   }
 };
 
-const chain = (obj) => {
-  const wrappedObj = new ArrayLib(obj);
-  wrappedObj._isChainable = true;
-  return wrappedObj;
-};
-
-const value = () => {
-  return this._currentValue;
-};
-
-const createMethod = (method) => {
+function createMethod(method) {
   return function () {
     const firstArgument = this._isChainable ? this._currentValue : arguments[0];
     const secondArgument = this._isChainable ? arguments[0] : arguments[1];
@@ -89,21 +79,40 @@ const createMethod = (method) => {
     }
     return this._isChainable ? this : result;
   };
-};
+}
 
-var ArrayLib = function (currentValue) {
-  this.take = createMethod(take);
-  this.skip = createMethod(skip);
-  this.map = createMethod(map);
-  this.reduce = createMethod(reduce);
-  this.filter = createMethod(filter);
-  this.foreach = createMethod(foreach);
-  this.chain = chain;
-  this.value = value;
-  this._isChainable = false;
-  this._currentValue = currentValue;
-  return this;
-};
+class ArrayLib {
+  constructor(currentValue) {
+    this._isChainable = false;
+    this._currentValue = currentValue;
+  }
+  value() {
+    return this._currentValue;
+  }
+  take(...args) {
+    return createMethod(take).call(this, ...args);
+  }
+  skip(...args) {
+    return createMethod(skip).call(this, ...args);
+  }
+  map(...args) {
+    return createMethod(map).call(this, ...args);
+  }
+  reduce(...args) {
+    return createMethod(reduce).call(this, ...args);
+  }
+  filter(...args) {
+    return createMethod(filter).call(this, ...args);
+  }
+  foreach(...args) {
+    return createMethod(foreach).call(this, ...args);
+  }
+  chain(obj) {
+    const wrappedObj = new ArrayLib(obj);
+    wrappedObj._isChainable = true;
+    return wrappedObj;
+  }
+}
 
 // eslint-disable-next-line no-unused-vars
 var arrLib = new ArrayLib();
