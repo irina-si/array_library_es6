@@ -1,0 +1,20 @@
+{
+  "name": "array_library_es6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prettier-watch": "onchange 'src/**/*.js' -- prettier --write {{changed}}",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.js' --write",
+    "lint": "eslint"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "onchange": "^7.1.0",
+    "prettier": "^2.2.1"
+  }
+}
