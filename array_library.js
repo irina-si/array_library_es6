@@ -63,12 +63,6 @@ const foreach = (arr, callback) => {
   }
 };
 
-function chain(obj) {
-  const wrappedObj = new ArrayLib(obj);
-  wrappedObj._isChainable = true;
-  return wrappedObj;
-}
-
 function createMethod(method) {
   return function () {
     const firstArgument = this._isChainable ? this._currentValue : arguments[0];
@@ -92,11 +86,9 @@ class ArrayLib {
     this._isChainable = false;
     this._currentValue = currentValue;
   }
-
   value() {
     return this._currentValue;
   }
-
   take(...args) {
     return createMethod(take).call(this, ...args);
   }
@@ -116,7 +108,9 @@ class ArrayLib {
     return createMethod(foreach).call(this, ...args);
   }
   chain(obj) {
-    return chain(obj);
+    const wrappedObj = new ArrayLib(obj);
+    wrappedObj._isChainable = true;
+    return wrappedObj;
   }
 }
 
