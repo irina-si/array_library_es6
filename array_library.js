@@ -63,17 +63,17 @@ const foreach = (arr, callback) => {
   }
 };
 
-const chain = (obj) => {
+function chain (obj) {
   const wrappedObj = new ArrayLib(obj);
   wrappedObj._isChainable = true;
   return wrappedObj;
 };
 
-const value = () => {
+function value () {
   return this._currentValue;
 };
 
-const createMethod = (method) => {
+function createMethod (method) {
   return function () {
     const firstArgument = this._isChainable ? this._currentValue : arguments[0];
     const secondArgument = this._isChainable ? arguments[0] : arguments[1];
